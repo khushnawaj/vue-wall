@@ -19,7 +19,8 @@ router.get("/google/callback",
     passport.authenticate("google", { failureRedirect: "/login", session: false }),
     (req, res) => {
         const token = generateToken(req.user._id);
-        res.redirect(`http://localhost:3000/auth/social-callback?token=${token}`);
+        const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
+        res.redirect(`${clientUrl}/auth/social-callback?token=${token}`);
     }
 );
 
