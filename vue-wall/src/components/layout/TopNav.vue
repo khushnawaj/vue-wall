@@ -11,7 +11,7 @@
     <!-- 1. LOGO -->
     <button
       @click="goHome"
-      class="font-heading font-extrabold text-3xl md:text-2xl tracking-tight flex items-center gap-2 group"
+      class="font-heading font-extrabold text-xl md:text-2xl tracking-tight flex items-center gap-2 group"
     >
       <span class="text-text hover:text-accent transition-colors">
         ArtWall
@@ -21,14 +21,12 @@
     <!-- 2. CENTER NAV (Desktop) -->
     <nav class="hidden lg:flex items-center gap-1 bg-bg-muted/50 p-1.5 rounded-full border border-white/10">
         <button 
-             v-for="item in menuItemsExtended" 
-             :key="item.name"
-             @click="handleNav(item)"
+             @click="router.push('/')"
              class="p-2.5 rounded-xl transition-all duration-200 relative group"
-             :class="isActive(item.path) ? 'bg-accent/10 text-accent' : 'text-text-soft hover:text-text hover:bg-bg-muted'"
-             :title="item.name"
+             :class="isActive('/') ? 'bg-accent/10 text-accent' : 'text-text-soft hover:text-text hover:bg-bg-muted'"
+             title="Home"
         >
-            <component :is="item.icon" :size="20" :stroke-width="isActive(item.path) ? 2.5 : 2" />
+            <Home :size="20" :stroke-width="isActive('/') ? 2.5 : 2" />
         </button>
     </nav>
 
@@ -55,10 +53,10 @@
         </button>
 
         <template v-if="isLoggedIn">
-            <!-- Messages -->
+            <!-- Messages (Visible on Mobile now) -->
             <button 
                 @click="router.push('/chat')" 
-                class="hidden sm:flex p-2.5 rounded-full hover:bg-bg-muted text-text-soft hover:text-text transition relative"
+                class="flex p-2.5 rounded-full hover:bg-bg-muted text-text-soft hover:text-text transition relative"
                 title="Messages"
             >
                 <MessageSquare :size="18" />
@@ -67,10 +65,10 @@
                 </span>
             </button>
 
-            <!-- Notifications -->
+            <!-- Notifications (Visible on Mobile now) -->
             <button 
                 @click="router.push('/notifications')" 
-                class="hidden sm:flex p-2.5 rounded-full hover:bg-bg-muted text-text-soft hover:text-text transition relative"
+                class="flex p-2.5 rounded-full hover:bg-bg-muted text-text-soft hover:text-text transition relative"
                 title="Notifications"
             >
                 <Bell :size="18" />

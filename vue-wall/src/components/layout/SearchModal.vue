@@ -66,7 +66,7 @@
                 <!-- Artworks -->
                 <div v-if="searchStore.results.artworks.length > 0">
                     <h4 class="text-[10px] font-bold text-text-muted uppercase tracking-[0.2em] mb-4 px-2">Artworks</h4>
-                    <div class="grid grid-cols-3 gap-3 px-2">
+                    <div class="grid grid-cols-3 gap-1 md:gap-3 px-2">
                         <div 
                             v-for="art in searchStore.results.artworks" 
                             :key="art._id"
@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 import { useSearchStore } from "@/store/searchStore";
 import { useArtStore } from "@/store/artStore";
 import { useRouter } from "vue-router";
@@ -127,9 +127,17 @@ function openArt(art) {
     emit('close');
 }
 
+// Watch isOpen to focus input
+watch(() => props.isOpen, (val) => {
+    if (val) {
+        focusInput();
+    }
+});
+
 onMounted(() => {
     window.addEventListener("keydown", handleKeydown);
-    focusInput();
+    // Initial check if already open
+    if (props.isOpen) focusInput();
 });
 
 onUnmounted(() => {

@@ -173,7 +173,7 @@ onMounted(loadProfile);
                 </div>
 
                 <!-- Stats Row -->
-                <div class="flex gap-8 mb-6 text-sm font-medium">
+                <div class="flex justify-around w-full md:w-auto md:justify-start md:gap-8 mb-6 text-sm font-medium border-y md:border-none border-border py-4 md:py-0">
                     <div class="text-text-soft">
                     <span class="text-text font-bold">{{ isMyProfile ? store.myPosts.length : userArtworks.length }}</span> posts
                     </div>

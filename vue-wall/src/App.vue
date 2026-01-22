@@ -104,7 +104,7 @@ const isAnyModalOpen = computed(() => {
     <Toast />
     
     <!-- Mobile Bottom Nav -->
-    <BottomNav @openUpload="showUpload = true" />
+    <BottomNav @openUpload="showUpload = true" @openSearch="showSearch = true" />
   </div>
 </template>
 
