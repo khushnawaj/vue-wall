@@ -6,12 +6,12 @@
       SIDEBAR (Conversation List)
     -->
     <div 
-      class="w-full md:w-96 bg-white dark:bg-bg flex flex-col border-r border-border md:rounded-2xl md:border md:mr-4 shadow-sm overflow-hidden z-20"
+      class="w-full md:w-96 bg-bg flex flex-col border-r border-border md:rounded-2xl md:border md:mr-4 shadow-sm overflow-hidden z-20"
       :class="{ 'hidden md:flex': activeConversationId && isMobile, 'flex': !activeConversationId || !isMobile }"
     >
       <!-- Header -->
-      <div class="px-5 py-4 border-b border-border bg-white dark:bg-bg/95 backdrop-blur z-10 flex justify-between items-center">
-        <h1 class="text-2xl font-heading font-extrabold tracking-tight text-text">Hikers</h1>
+      <div class="px-5 py-4 border-b border-border bg-bg/95 backdrop-blur z-10 flex justify-between items-center">
+        <h1 class="text-2xl font-heading font-extrabold tracking-tight text-text">Messages</h1>
         <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent">
             <span class="text-xs font-bold">{{ chatStore.conversations.length }}</span>
         </div>
@@ -24,7 +24,7 @@
             <input 
                 type="text" 
                 placeholder="Search people..." 
-                class="w-full bg-bg-muted/50 pl-10 pr-4 py-3 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-bg transition-all placeholder:text-text-muted/70"
+                class="w-full bg-bg-muted/50 pl-10 pr-4 py-3 rounded-2xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent/20 focus:bg-bg transition-all placeholder:text-text-muted/70 text-text"
             >
         </div>
       </div>
@@ -40,14 +40,14 @@
         >
           <!-- Avatar -->
           <div class="relative shrink-0">
-             <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-white dark:border-bg shadow-sm bg-bg-soft">
+             <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-bg-soft shadow-sm bg-bg-soft">
                   <img v-if="getPartner(conv)?.avatar" :src="getPartner(conv).avatar" class="w-full h-full object-cover">
                   <div v-else class="w-full h-full flex items-center justify-center font-bold text-accent text-lg bg-accent/5">
                       {{ getPartner(conv)?.name?.charAt(0) }}
                   </div>
              </div>
              <!-- Online Status -->
-             <span class="absolute bottom-1 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-bg rounded-full p-0.5"></span>
+             <span class="absolute bottom-1 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-bg rounded-full p-0.5"></span>
           </div>
 
           <div class="flex-1 min-w-0 py-1">
@@ -82,16 +82,16 @@
       MAIN CHAT AREA 
     -->
     <div 
-      class="flex-1 overflow-hidden flex flex-col bg-[#e5ddd5] dark:bg-[#1a1a1a] md:border md:border-border md:rounded-2xl shadow-sm relative z-10"
+      class="flex-1 overflow-hidden flex flex-col bg-bg-soft md:border md:border-border md:rounded-2xl shadow-sm relative z-10"
       :class="{ 'flex fixed inset-0 z-50 md:static': activeConversationId && isMobile, 'hidden md:flex': !activeConversationId && isMobile }"
     >
         <template v-if="chatStore.activeConversation">
             
             <!-- Doodle Background -->
-            <div class="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.03] pointer-events-none chat-bg-pattern"></div>
+            <div class="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08] pointer-events-none chat-bg-pattern dark:invert"></div>
 
             <!-- Header -->
-            <div class="h-[68px] px-2 md:px-4 flex items-center justify-between bg-white dark:bg-bg border-b border-border z-20 shadow-sm relative">
+            <div class="h-[68px] px-2 md:px-4 flex items-center justify-between bg-bg border-b border-border z-20 shadow-sm relative">
                 <div class="flex items-center gap-1">
                     <button 
                         @click="closeChat"
@@ -135,12 +135,12 @@
                 class="flex-1 overflow-y-auto px-3 py-4 md:px-8 space-y-3 z-10 relative custom-scrollbar scroll-smooth"
             >
                 <div v-if="chatStore.loading" class="flex justify-center py-6">
-                    <div class="px-4 py-1 bg-white/50 backdrop-blur rounded-full text-xs font-bold text-text-muted shadow-sm">Loading legacy...</div>
+                    <div class="px-4 py-1 bg-bg-muted/70 backdrop-blur rounded-full text-xs font-bold text-text-muted shadow-sm border border-border">Loading messages...</div>
                 </div>
                 
                 <!-- Date Pill Mockup -->
                 <div class="flex justify-center my-4 sticky top-0 z-10 opacity-80 hover:opacity-100 transition-opacity">
-                    <span class="px-3 py-1 bg-[#dbebf9] dark:bg-zinc-800 text-text-soft text-[11px] font-bold rounded-full shadow-sm">Today</span>
+                    <span class="px-3 py-1 bg-bg-muted border border-border text-text-soft text-[11px] font-bold rounded-full shadow-sm">Today</span>
                 </div>
 
                 <div 
@@ -159,7 +159,7 @@
                             :class="[
                                 isMe(msg) 
                                     ? 'bg-gradient-to-br from-[#00b2ff] to-[#006aff] text-white rounded-2xl rounded-tr-none bubble-sent' 
-                                    : 'bg-white dark:bg-[#202c33] text-text rounded-2xl rounded-tl-none bubble-received border border-border/20'
+                                    : 'bg-bg border border-border/60 text-text rounded-2xl rounded-tl-none bubble-received'
                             ]"
                          >
                             {{ msg.text }}
@@ -182,13 +182,13 @@
             </div>
 
             <!-- Input Area -->
-            <div class="bg-white dark:bg-bg border-t border-border p-3 md:p-4 z-20 relative">
+            <div class="bg-bg border-t border-border p-3 md:p-4 z-20 relative">
                 <div class="flex items-end gap-2">
                     <button class="p-3 text-text-muted hover:text-accent transition-colors rounded-full hover:bg-bg-muted">
                         <Plus :size="24" />
                     </button>
                     
-                    <div class="flex-1 bg-bg-muted/40 border border-transparent focus-within:border-accent/30 focus-within:bg-white dark:focus-within:bg-black/20 rounded-[24px] flex items-center px-4 py-1 transition-all">
+                    <div class="flex-1 bg-bg-muted/40 border border-transparent focus-within:border-accent/30 focus-within:bg-bg rounded-[24px] flex items-center px-4 py-1 transition-all">
                         <textarea 
                             v-model="newMessage"
                             rows="1"
