@@ -42,6 +42,11 @@ export const useSocket = () => {
             }
         });
 
+        socket.on("messagesRead", ({ conversationId }) => {
+            console.log("👀 Messages read in conversation:", conversationId);
+            chatStore.markLocalMessagesRead(conversationId);
+        });
+
         console.log("🔌 Connected to Socket.io");
     };
 

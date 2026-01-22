@@ -91,3 +91,44 @@ export const getMessages = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch messages" });
     }
 };
+/* --------------------
+   MARK MESSAGES AS READ
+-------------------- */
+export const markMessagesRead = async (req, res) => {
+    try {
+        const { conversationId } = req.params;
+        const currentUserId = req.user._id;
+
+        const result = await Message.updateMany(
+            { 
+                conversation: conversationId, 
+                sender: { $ne: currentUserId }, 
+                isRead: false 
+            },
+            { $set: { isRead: true } }
+        );
+
+        if (result.modifiedCount > 0) {
+            const io = getIO();
+            // We need to notify the OTHER participant that their messages were read
+            // Find the config to get participants
+            const conversation = await Conversation.findById(conversationId);
+            if (conversation) {
+                 conversation.participants.forEach(pId => {
+                     // Don't notify self
+                     if (pId.toString() !== currentUserId.toString()) {
+                         const socketId = getReceiverSocketId(pId.toString());
+                         if (socketId) {
+                             io.to(socketId).emit("messagesRead", { conversationId });
+                         }
+                     }
+                 });
+            }
+        }
+
+        res.status(200).json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Failed to mark messages as read" });
+    }
+};

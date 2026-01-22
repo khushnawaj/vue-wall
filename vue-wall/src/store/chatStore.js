@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import api from "@/services/api";
+import { useAuthStore } from "./authStore";
 
 export const useChatStore = defineStore("chat", {
   state: () => ({
@@ -51,6 +52,28 @@ export const useChatStore = defineStore("chat", {
       } catch (err) {
         console.error(err);
       }
+    },
+
+    async markAsRead(conversationId) {
+      try {
+        await api.put(`/chat/read/${conversationId}`);
+        // Locally update messages
+        this.messages.forEach(m => {
+            if (!m.isRead && m.sender !== useAuthStore().user?._id) {
+                m.isRead = true;
+            }
+        });
+      } catch (err) {
+        console.error("Failed to mark read", err);
+      }
+    },
+
+    markLocalMessagesRead(conversationId) {
+        if (this.activeConversation && this.activeConversation._id === conversationId) {
+            this.messages.forEach(m => {
+                m.isRead = true;
+            });
+        }
     },
 
     addMessage(message) {
