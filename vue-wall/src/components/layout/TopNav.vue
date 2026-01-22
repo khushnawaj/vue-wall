@@ -120,8 +120,8 @@
     </div>
   </header>
 
-   <!-- Mobile Nav Row -->
-   <nav class="lg:hidden sticky top-[70px] z-40 w-full bg-bg-soft/95 backdrop-blur-md border-b border-border flex justify-around p-1">
+   <!-- Tablet Nav Row (Hidden on Mobile & Desktop) -->
+   <nav class="hidden md:flex lg:hidden sticky top-[70px] z-40 w-full bg-bg-soft/95 backdrop-blur-md border-b border-border justify-around p-1">
          <button 
              v-for="item in menuItemsExtended" 
              :key="item.name"
@@ -133,6 +133,15 @@
             <span v-if="item.badge > 0" class="absolute top-2 right-2 w-3.5 h-3.5 bg-accent text-[8px] flex items-center justify-center text-bg rounded-full font-bold border border-bg-soft">
                 {{ item.badge }}
             </span>
+        </button>
+        
+        <!-- Add Create Button for Tablet Mode -->
+        <button
+            @click="emit('openUpload')"
+            class="p-2.5 rounded-xl transition-all bg-accent text-bg hover:opacity-90 shadow-sm"
+            title="Create"
+        >
+             <Plus :size="20" :stroke-width="2.5" />
         </button>
    </nav>
 

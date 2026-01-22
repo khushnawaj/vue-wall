@@ -2,9 +2,11 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/authStore";
+import Loader from "@/components/ui/Loader.vue";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const name = ref("");
 const email = ref("");
@@ -78,11 +80,12 @@ async function handleSignup() {
       </p>
 
       <button
-        class="signup-btn mt-8 w-full py-4 rounded-2xl shadow-lg shadow-accent/20"
+        class="signup-btn mt-8 w-full py-4 rounded-2xl shadow-lg shadow-accent/20 flex items-center justify-center min-h-[56px]"
         :disabled="loading"
         @click="handleSignup"
       >
-        {{ loading ? "CREATING ACCOUNT..." : "Get Started" }}
+        <Loader v-if="loading" class="text-bg scale-75" />
+        <span v-else>Get Started</span>
       </button>
 
       <!-- DIVIDER -->
@@ -94,10 +97,10 @@ async function handleSignup() {
 
       <!-- SOCIAL BUTTONS -->
       <div class="grid grid-cols-2 gap-3">
-          <a href="http://localhost:5000/api/auth/google" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+          <a :href="`${API_URL}/auth/google`" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
                Google
           </a>
-          <a href="http://localhost:5000/api/auth/linkedin" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+          <a :href="`${API_URL}/auth/linkedin`" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
                LinkedIn
           </a>
       </div>
@@ -151,7 +154,7 @@ async function handleSignup() {
 }
 
 .signup-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.8;
+  cursor: wait;
 }
 </style>

@@ -3,6 +3,7 @@ import { ref, onMounted, watch, computed } from "vue";
 import { RouterView } from "vue-router";
 
 import TopNav from "@/components/layout/TopNav.vue";
+import BottomNav from "@/components/layout/BottomNav.vue";
 import UploadModal from "@/components/post/UploadModal.vue";
 import ArtworkFocusModal from "@/components/post/ArtworkFocusModal.vue";
 import SearchModal from "@/components/layout/SearchModal.vue";
@@ -64,14 +65,14 @@ const isAnyModalOpen = computed(() => {
       min-h-screen flex flex-col md:flex-row
       bg-bg text-text
       transition-colors duration-500
-      relative overflow-hidden
+      relative
     "
   >
     <!-- Ambient Glow Effects -->
     <div class="fixed top-0 left-[-10%] w-[40%] h-[40%] bg-accent/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
     <div class="fixed bottom-0 right-[-10%] w-[40%] h-[40%] bg-accent/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
     <!-- 2. MAIN CONTENT AREA -->
-    <main class="flex-1 relative flex flex-col items-center w-full">
+    <main class="flex-1 relative flex flex-col items-center w-full mb-16 md:mb-0">
         
         <!-- UNIFIED TOP NAV -->
         <TopNav 
@@ -101,6 +102,9 @@ const isAnyModalOpen = computed(() => {
     </transition>
 
     <Toast />
+    
+    <!-- Mobile Bottom Nav -->
+    <BottomNav @openUpload="showUpload = true" />
   </div>
 </template>
 

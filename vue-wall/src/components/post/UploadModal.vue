@@ -105,13 +105,14 @@ function cleanup(close = false) {
               bg-bg
               hover:border-accent
               transition-colors
+              touch-manipulation
             "
           >
             <input
               :key="inputKey"
               type="file"
               accept="image/*"
-              hidden
+              class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
               :disabled="loading"
               @change="onFileChange"
             />

@@ -1,4 +1,7 @@
 /* Professional Portfolio Theme (Inspired by Khushnawaj) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+
 :root {
   --spring-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
   --soft-ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -11,12 +14,6 @@
 /* ----------------------------------------
    THEME VARIABLES
 ---------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-/* ----------------------------------------
-   THEME VARIABLES ("Vivid" Modern)
----------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
 
 /* Light Theme */
 :root {

@@ -2,9 +2,11 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/store/authStore"; 
+import Loader from "@/components/ui/Loader.vue";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const email = ref("");
 const password = ref("");
@@ -77,11 +79,12 @@ async function handleLogin() {
       </p>
 
       <button
-        class="login-btn mt-8 w-full py-4 rounded-2xl shadow-lg shadow-accent/20"
+        class="login-btn mt-8 w-full py-4 rounded-2xl shadow-lg shadow-accent/20 flex items-center justify-center min-h-[56px]"
         :disabled="loading"
         @click="handleLogin"
       >
-        {{ loading ? "VERIFYING..." : "Continue" }}
+        <Loader v-if="loading" class="text-bg scale-75" />
+        <span v-else>Continue</span>
       </button>
 
       <!-- DIVIDER -->
@@ -93,10 +96,10 @@ async function handleLogin() {
 
       <!-- SOCIAL BUTTONS -->
       <div class="grid grid-cols-2 gap-3">
-          <a href="http://localhost:5000/api/auth/google" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+          <a :href="`${API_URL}/auth/google`" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
                Google
           </a>
-          <a href="http://localhost:5000/api/auth/linkedin" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+          <a :href="`${API_URL}/auth/linkedin`" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
                LinkedIn
           </a>
       </div>
@@ -150,7 +153,7 @@ async function handleLogin() {
 }
 
 .login-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  opacity: 0.8;
+  cursor: wait;
 }
 </style>

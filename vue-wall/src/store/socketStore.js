@@ -4,7 +4,7 @@ import { useNotificationStore } from "./notificationStore";
 import { useChatStore } from "./chatStore";
 import { useToastStore } from "./toastStore";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = import.meta.env.VITE_API_ORIGIN || "http://localhost:5000";
 
 let socket = null;
 

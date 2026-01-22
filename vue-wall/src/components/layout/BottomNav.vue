@@ -17,10 +17,10 @@ const emit = defineEmits(["openUpload"]);
   <!-- Mobile Bottom Navigation -->
   <nav
     class="
-      fixed bottom-0 inset-x-0 z-50
+      fixed bottom-0 inset-x-0 z-[100]
       md:hidden
-      bg-bg border-t border-border
-      pb-safe
+      bg-bg/95 backdrop-blur-md border-t border-border
+      pb-safe shadow-lg
     "
   >
     <div class="flex items-center justify-around h-12">
