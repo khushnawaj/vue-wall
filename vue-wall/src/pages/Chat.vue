@@ -171,8 +171,10 @@
                             >
                                 <span class="text-[10px] font-medium opacity-90">{{ formatMessageTime(msg.createdAt) }}</span>
                                 <span v-if="isMe(msg)" class="flex items-center">
-                                    <CheckCheck v-if="msg.isRead" :size="14" class="text-white" />
-                                    <Check v-else :size="14" class="opacity-80" />
+                                    <!-- Double Tick (Read) -->
+                                    <CheckCheck v-if="msg.isRead" :size="15" class="text-sky-200 stroke-[2.5]" />
+                                    <!-- Single Tick (Sent/Unread) -->
+                                    <Check v-else :size="15" class="opacity-70" />
                                 </span>
                             </div>
                          </div>
@@ -275,9 +277,19 @@ function updateWidth() {
 }
 onMounted(() => {
     window.addEventListener('resize', updateWidth);
+    window.addEventListener('focus', handleWindowFocus);
     chatStore.fetchConversations();
 });
-onUnmounted(() => window.removeEventListener('resize', updateWidth));
+onUnmounted(() => {
+    window.removeEventListener('resize', updateWidth);
+    window.removeEventListener('focus', handleWindowFocus);
+});
+
+function handleWindowFocus() {
+    if (chatStore.activeConversation) {
+        markReadIfActive();
+    }
+}
 
 function getPartner(conv) {
     if (!conv || !conv.participants) return null;
