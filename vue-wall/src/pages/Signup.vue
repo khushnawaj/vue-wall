@@ -1,0 +1,157 @@
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/store/authStore";
+
+const router = useRouter();
+const authStore = useAuthStore();
+
+const name = ref("");
+const email = ref("");
+const phone = ref("");
+const password = ref("");
+
+const loading = ref(false);
+const error = ref("");
+
+async function handleSignup() {
+  if (!name.value || !email.value || !phone.value || !password.value) {
+    error.value = "All fields are required";
+    return;
+  }
+
+  try {
+    loading.value = true;
+    error.value = "";
+
+    await authStore.signup({
+      name: name.value,
+      email: email.value,
+      phone: phone.value,
+      password: password.value
+    });
+
+    router.push("/");
+  } catch (err) {
+    error.value =
+      err?.response?.data?.message || "Signup failed. Try again.";
+  } finally {
+    loading.value = false;
+  }
+}
+</script>
+
+<template>
+  <div class="min-h-screen flex items-center justify-center p-6 bg-bg relative overflow-hidden">
+    <div
+      class="w-full max-w-sm p-10
+             bg-bg-soft border border-border
+             rounded-[2.5rem] shadow-2xl animate-in fade-in zoom-in duration-700 z-10"
+    >
+      <div class="mb-10 text-center">
+          <h1 class="text-3xl font-heading font-extrabold text-text tracking-tighter mb-2">
+            Create account.
+          </h1>
+          <p class="text-sm font-medium text-text-muted">
+            Join our community of visionaries.
+          </p>
+      </div>
+
+      <div class="space-y-4">
+          <input v-model="name" placeholder="Full Name" class="input" />
+          <input v-model="email" placeholder="Email" class="input" />
+          <input v-model="phone" placeholder="Phone" class="input" />
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Password"
+            class="input"
+          />
+      </div>
+
+      <!-- Error -->
+      <p
+        v-if="error"
+        class="text-xs text-danger font-bold mt-4 px-2"
+      >
+        {{ error }}
+      </p>
+
+      <button
+        class="signup-btn mt-8 w-full py-4 rounded-2xl shadow-lg shadow-accent/20"
+        :disabled="loading"
+        @click="handleSignup"
+      >
+        {{ loading ? "CREATING ACCOUNT..." : "Get Started" }}
+      </button>
+
+      <!-- DIVIDER -->
+      <div class="flex items-center gap-4 my-8">
+          <div class="h-px bg-border flex-1"></div>
+          <span class="text-[10px] text-text-muted font-bold uppercase tracking-widest">Or join with</span>
+          <div class="h-px bg-border flex-1"></div>
+      </div>
+
+      <!-- SOCIAL BUTTONS -->
+      <div class="grid grid-cols-2 gap-3">
+          <a href="http://localhost:5000/api/auth/google" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+               Google
+          </a>
+          <a href="http://localhost:5000/api/auth/linkedin" class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl border border-border hover:bg-bg-muted transition text-xs font-bold text-text">
+               LinkedIn
+          </a>
+      </div>
+
+      <p class="text-[13px] text-text-muted mt-10 text-center font-medium">
+        Already have an account?
+        <span
+          class="text-accent cursor-pointer font-bold hover:underline"
+          @click="router.push('/login')"
+        >
+          Log in
+        </span>
+      </p>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.input {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  background: var(--bg-soft);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.signup-btn {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.signup-btn:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.signup-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+</style>
