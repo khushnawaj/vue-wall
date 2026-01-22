@@ -9,11 +9,29 @@ import notificationRoutes from "./routes/notification.routes.js";
 import chatRoutes from "./routes/chat.routes.js";
 import searchRoutes from "./routes/search.routes.js";
 
+
+const allowedOrigins = [
+  "http://localhost:5173",        // Vite local
+  "http://localhost:3000",        // optional
+  "https://vue-wall.vercel.app"   // Vercel frontend
+];
+
 const app = express();
 configureSocialAuth();
 
 /* Middleware */
-app.use(cors());
+app.use(cors(
+  {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  }
+));
 app.use(express.json());
 app.use(passport.initialize());
 
