@@ -25,6 +25,20 @@ export const initSocket = (server) => {
         console.log(`🔌 User Disconnected: ${userId}`);
       }
     });
+
+    socket.on("typing", ({ conversationId, recipientId }) => {
+        const receiverSocketId = userSocketMap[recipientId];
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("userTyping", { conversationId, senderId: userId });
+        }
+    });
+
+    socket.on("stopTyping", ({ conversationId, recipientId }) => {
+        const receiverSocketId = userSocketMap[recipientId];
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("userStoppedTyping", { conversationId, senderId: userId });
+        }
+    });
   });
 
   return io;

@@ -47,6 +47,14 @@ export const useSocket = () => {
             chatStore.markLocalMessagesRead(conversationId);
         });
 
+        socket.on("userTyping", ({ conversationId, senderId }) => {
+            chatStore.setTypingStatus(conversationId, true);
+        });
+
+        socket.on("userStoppedTyping", ({ conversationId, senderId }) => {
+            chatStore.setTypingStatus(conversationId, false);
+        });
+
         console.log("🔌 Connected to Socket.io");
     };
 

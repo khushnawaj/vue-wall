@@ -20,7 +20,7 @@
       <!-- Search -->
       <div class="px-4 py-2">
         <div class="relative group">
-            <Search :size="18" class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-accent transition-colors" />
+            <Search class="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted group-focus-within:text-accent transition-colors w-4 h-4 md:w-5 md:h-5" />
             <input 
                 type="text" 
                 placeholder="Search people..." 
@@ -40,38 +40,38 @@
         >
           <!-- Avatar -->
           <div class="relative shrink-0">
-             <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-bg-soft shadow-sm bg-bg-soft">
+             <div class="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden border-2 border-bg-soft shadow-sm bg-bg-soft">
                   <img v-if="getPartner(conv)?.avatar" :src="getPartner(conv).avatar" class="w-full h-full object-cover">
                   <div v-else class="w-full h-full flex items-center justify-center font-bold text-accent text-lg bg-accent/5">
                       {{ getPartner(conv)?.name?.charAt(0) }}
                   </div>
              </div>
              <!-- Online Status -->
-             <span class="absolute bottom-1 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-bg rounded-full p-0.5"></span>
+             <span class="absolute bottom-1 right-0 w-3 h-3 md:w-3.5 md:h-3.5 bg-green-500 border-2 border-bg rounded-full p-0.5"></span>
           </div>
 
           <div class="flex-1 min-w-0 py-1">
              <div class="flex justify-between items-center mb-0.5">
                  <h4 
-                    class="font-bold text-[16px] truncate"
+                    class="font-bold text-[15px] md:text-[16px] truncate"
                     :class="isActive(conv) ? 'text-text' : 'text-text'"
                  >
                     {{ getPartner(conv)?.name }}
                  </h4>
-                 <span class="text-[11px] font-bold text-text-muted/80 bg-bg-muted/50 px-1.5 py-0.5 rounded-md">{{ formatTime(conv.updatedAt) }}</span>
+                 <span class="text-[10px] md:text-[11px] font-bold text-text-muted/80 bg-bg-muted/50 px-1.5 py-0.5 rounded-md">{{ formatTime(conv.updatedAt) }}</span>
              </div>
              <div class="flex items-center gap-1.5">
                  <span v-if="conv.lastMessage?.sender === authStore.user?._id" class="text-text-muted shrink-0">
-                    <CheckCheck v-if="conv.lastMessage.isRead" :size="16" class="text-blue-500" />
-                    <Check v-else :size="16" />
+                    <CheckCheck v-if="conv.lastMessage.isRead" class="w-3.5 h-3.5 md:w-4 md:h-4 text-sky-200" />
+                    <Check v-else class="w-3.5 h-3.5 md:w-4 md:h-4" />
                  </span>
                  <p 
-                    class="text-[14px] truncate leading-snug flex-1"
+                    class="text-[13px] md:text-[14px] truncate leading-snug flex-1"
                     :class="isUnread(conv) ? 'text-text font-bold' : 'text-text-soft font-medium'"
                  >
                     {{ conv.lastMessage?.text || 'Say hi! 👋' }}
                  </p>
-                 <span v-if="isUnread(conv)" class="w-5 h-5 bg-accent text-white text-[10px] flex items-center justify-center rounded-full font-bold shadow-sm shadow-accent/30">1</span>
+                 <span v-if="isUnread(conv)" class="w-4 h-4 md:w-5 md:h-5 bg-accent text-white text-[10px] flex items-center justify-center rounded-full font-bold shadow-sm shadow-accent/30">1</span>
              </div>
           </div>
         </div>
@@ -91,28 +91,28 @@
             <div class="absolute inset-0 z-0 opacity-[0.06] dark:opacity-[0.08] pointer-events-none chat-bg-pattern dark:invert"></div>
 
             <!-- Header -->
-            <div class="h-[68px] px-2 md:px-4 flex items-center justify-between bg-bg border-b border-border z-20 shadow-sm relative">
+            <div class="h-[60px] md:h-[68px] px-2 md:px-4 flex items-center justify-between bg-bg border-b border-border z-20 shadow-sm relative">
                 <div class="flex items-center gap-1">
                     <button 
                         @click="closeChat"
                         class="md:hidden p-2 rounded-full hover:bg-bg-muted text-text-soft transition"
                     >
-                        <ChevronLeft :size="26" stroke-width="2.5" />
+                        <ChevronLeft class="w-6 h-6" stroke-width="2.5" />
                     </button>
                     
                     <div 
-                        class="flex items-center gap-3 cursor-pointer p-1.5 rounded-lg hover:bg-bg-muted/50 transition"
+                        class="flex items-center gap-2 md:gap-3 cursor-pointer p-1.5 rounded-lg hover:bg-bg-muted/50 transition"
                         @click="router.push(`/profile/${activePartner?._id}`)"
                     >
-                        <div class="w-10 h-10 rounded-full overflow-hidden border border-border shadow-sm">
+                        <div class="w-9 h-9 md:w-10 md:h-10 rounded-full overflow-hidden border border-border shadow-sm">
                             <img v-if="activePartner?.avatar" :src="activePartner.avatar" class="w-full h-full object-cover">
                             <div v-else class="w-full h-full flex items-center justify-center font-bold text-lg text-accent bg-accent/5">
                                 {{ activePartner?.name?.charAt(0) }}
                             </div>
                         </div>
                         <div class="flex flex-col">
-                            <h3 class="font-bold text-base leading-none text-text mb-0.5">{{ activePartner?.name }}</h3>
-                            <span class="text-[11px] font-bold text-text-muted/80 flex items-center gap-1">
+                            <h3 class="font-bold text-[15px] md:text-base leading-none text-text mb-0.5">{{ activePartner?.name }}</h3>
+                            <span class="text-[10px] md:text-[11px] font-bold text-text-muted/80 flex items-center gap-1">
                                 tap for info
                             </span>
                         </div>
@@ -120,11 +120,11 @@
                 </div>
                 
                 <div class="flex items-center gap-1">
-                    <button class="p-2.5 rounded-full hover:bg-bg-muted text-accent transition">
-                        <Phone :size="22" stroke-width="1.5" /> <!-- Filled Phone -->
+                    <button class="p-2 md:p-2.5 rounded-full hover:bg-bg-muted text-accent transition">
+                        <Phone class="w-5 h-5 md:w-[22px] md:h-[22px]" stroke-width="1.5" />
                     </button>
-                    <button class="p-2.5 rounded-full hover:bg-bg-muted text-text-soft transition">
-                        <MoreVertical :size="22" />
+                    <button class="p-2 md:p-2.5 rounded-full hover:bg-bg-muted text-text-soft transition">
+                        <MoreVertical class="w-5 h-5 md:w-[22px] md:h-[22px]" />
                     </button>
                 </div>
             </div>
@@ -155,7 +155,7 @@
                     >
                          <!-- Message Bubble -->
                          <div 
-                            class="px-4 py-2 text-[15.5px] shadow-sm relative break-words leading-snug"
+                            class="px-4 py-2 text-[14.5px] md:text-[15.5px] shadow-sm relative break-words leading-snug"
                             :class="[
                                 isMe(msg) 
                                     ? 'bg-gradient-to-br from-[#00b2ff] to-[#006aff] text-white rounded-2xl rounded-tr-none bubble-sent' 
@@ -172,22 +172,31 @@
                                 <span class="text-[10px] font-medium opacity-90">{{ formatMessageTime(msg.createdAt) }}</span>
                                 <span v-if="isMe(msg)" class="flex items-center">
                                     <!-- Double Tick (Read) -->
-                                    <CheckCheck v-if="msg.isRead" :size="15" class="text-sky-200 stroke-[2.5]" />
+                                    <CheckCheck v-if="msg.isRead" class="w-3.5 h-3.5 md:w-4 md:h-4 text-sky-200 stroke-[2.5]" />
                                     <!-- Single Tick (Sent/Unread) -->
-                                    <Check v-else :size="15" class="opacity-70" />
+                                    <Check v-else class="w-3.5 h-3.5 md:w-4 md:h-4 opacity-70" />
                                 </span>
                             </div>
                          </div>
                     </div>
                 </div>
+                <!-- Typing Indicator -->
+                <div v-if="chatStore.isPartnerTyping" class="flex justify-start w-full animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <div class="px-4 py-3 bg-bg border border-border/60 rounded-2xl rounded-tl-none bubble-received shadow-sm flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 md:w-2 md:h-2 bg-text-muted/40 rounded-full animate-bounce"></span>
+                        <span class="w-1.5 h-1.5 md:w-2 md:h-2 bg-text-muted/40 rounded-full animate-bounce delay-75"></span>
+                        <span class="w-1.5 h-1.5 md:w-2 md:h-2 bg-text-muted/40 rounded-full animate-bounce delay-150"></span>
+                    </div>
+                </div>
+
                 <div ref="bottomRef" class="h-2"></div>
             </div>
 
             <!-- Input Area -->
             <div class="bg-bg border-t border-border p-3 md:p-4 z-20 relative">
                 <div class="flex items-end gap-2">
-                    <button class="p-3 text-text-muted hover:text-accent transition-colors rounded-full hover:bg-bg-muted">
-                        <Plus :size="24" />
+                    <button class="p-2 md:p-3 text-text-muted hover:text-accent transition-colors rounded-full hover:bg-bg-muted">
+                        <Plus class="w-5 h-5 md:w-6 md:h-6" />
                     </button>
                     
                     <div class="flex-1 bg-bg-muted/40 border border-transparent focus-within:border-accent/30 focus-within:bg-bg rounded-[24px] flex items-center px-4 py-1 transition-all">
@@ -195,18 +204,19 @@
                             v-model="newMessage"
                             rows="1"
                             placeholder="Type a message..."
-                            class="flex-1 bg-transparent max-h-32 text-[16px] py-3 focus:outline-none text-text placeholder:text-text-muted/60 resize-none custom-scrollbar"
+                            class="flex-1 bg-transparent max-h-32 text-[15px] md:text-[16px] py-3 focus:outline-none text-text placeholder:text-text-muted/60 resize-none custom-scrollbar"
                             @keydown.enter.prevent="handleSend"
                             @focus="markReadIfActive"
+                            @input="handleTyping"
                         ></textarea>
                     </div>
 
                     <button 
                          @click="handleSend"
                          :disabled="!newMessage.trim()"
-                         class="w-12 h-12 flex items-center justify-center bg-accent text-white rounded-full hover:opacity-90 disabled:opacity-50 disabled:grayscale transition-all shadow-lg shadow-accent/20 active:scale-95"
+                         class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-accent text-white rounded-full hover:opacity-90 disabled:opacity-50 disabled:grayscale transition-all shadow-lg shadow-accent/20 active:scale-95"
                     >
-                        <Send :size="22" stroke-width="2" class="ml-0.5" />
+                        <Send class="w-4 h-4 md:w-5 md:h-5 ml-0.5" stroke-width="2" />
                     </button>
                 </div>
             </div>
@@ -240,6 +250,7 @@ import { ref, computed, onMounted, watch, nextTick, onUnmounted } from "vue";
 import { useChatStore } from "@/store/chatStore";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "vue-router";
+import { useSocket } from "@/store/socketStore";
 import { 
     Send, 
     MoreVertical, 
@@ -255,10 +266,12 @@ import {
 const chatStore = useChatStore();
 const authStore = useAuthStore();
 const router = useRouter();
+const { socket } = useSocket();
 
 const msgContainer = ref(null);
 const bottomRef = ref(null);
 const newMessage = ref("");
+let typingTimeout = null;
 
 // Responsive State
 const windowWidth = ref(window.innerWidth);
@@ -329,9 +342,38 @@ async function handleSend() {
     if (!newMessage.value.trim()) return;
     const text = newMessage.value;
     newMessage.value = ""; // Clear immediately for better UX
+    emitStopTyping(); // Stop typing immediately on send
     await chatStore.sendMessage(chatStore.activeConversation._id, text);
     scrollToBottom();
 }
+
+function handleTyping() {
+    if (!chatStore.activeConversation) return;
+    
+    // Clear existing timeout
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    // Emit start typing if not already (optional: repeated emit is fine generally, but good to throttle)
+    // For simplicity, we just emit. A better way is to track "isTyping" local state.
+    socket.emit("typing", { 
+        conversationId: chatStore.activeConversation._id, 
+        recipientId: getPartner(chatStore.activeConversation)?._id 
+    });
+
+    // Set timeout to stop typing
+    typingTimeout = setTimeout(() => {
+        emitStopTyping();
+    }, 2000);
+}
+
+function emitStopTyping() {
+    if (!chatStore.activeConversation) return;
+    socket.emit("stopTyping", { 
+        conversationId: chatStore.activeConversation._id, 
+        recipientId: getPartner(chatStore.activeConversation)?._id 
+    });
+}
+
 
 // Formatters
 function formatTime(dateStr) {

@@ -7,7 +7,8 @@ export const useChatStore = defineStore("chat", {
     conversations: [],
     messages: [],
     activeConversation: null,
-    loading: false
+    loading: false,
+    isPartnerTyping: false
   }),
 
   actions: {
@@ -82,6 +83,8 @@ export const useChatStore = defineStore("chat", {
       
       if (this.activeConversation && message.conversation === this.activeConversation._id) {
           this.messages.push(message);
+          // If we receive a message, they clearly stopped typing (or sent it)
+          this.isPartnerTyping = false; 
       }
 
       // Update last message in conversations
@@ -94,6 +97,12 @@ export const useChatStore = defineStore("chat", {
           // might be a new conversation
           this.fetchConversations();
       }
+    },
+
+    setTypingStatus(conversationId, isTyping) {
+        if (this.activeConversation && this.activeConversation._id === conversationId) {
+            this.isPartnerTyping = isTyping;
+        }
     }
   }
 });
