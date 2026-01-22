@@ -266,7 +266,7 @@ import {
 const chatStore = useChatStore();
 const authStore = useAuthStore();
 const router = useRouter();
-const { socket } = useSocket();
+const { sendTyping, sendStopTyping } = useSocket();
 
 const msgContainer = ref(null);
 const bottomRef = ref(null);
@@ -353,12 +353,8 @@ function handleTyping() {
     // Clear existing timeout
     if (typingTimeout) clearTimeout(typingTimeout);
 
-    // Emit start typing if not already (optional: repeated emit is fine generally, but good to throttle)
-    // For simplicity, we just emit. A better way is to track "isTyping" local state.
-    socket.emit("typing", { 
-        conversationId: chatStore.activeConversation._id, 
-        recipientId: getPartner(chatStore.activeConversation)?._id 
-    });
+    // Emit start typing 
+    sendTyping(chatStore.activeConversation._id, getPartner(chatStore.activeConversation)?._id);
 
     // Set timeout to stop typing
     typingTimeout = setTimeout(() => {
@@ -368,10 +364,7 @@ function handleTyping() {
 
 function emitStopTyping() {
     if (!chatStore.activeConversation) return;
-    socket.emit("stopTyping", { 
-        conversationId: chatStore.activeConversation._id, 
-        recipientId: getPartner(chatStore.activeConversation)?._id 
-    });
+    sendStopTyping(chatStore.activeConversation._id, getPartner(chatStore.activeConversation)?._id);
 }
 
 

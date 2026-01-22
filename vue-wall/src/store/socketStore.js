@@ -66,5 +66,13 @@ export const useSocket = () => {
         }
     };
 
-    return { connect, disconnect, socket };
+    const sendTyping = (conversationId, recipientId) => {
+        if (socket) socket.emit("typing", { conversationId, recipientId });
+    };
+
+    const sendStopTyping = (conversationId, recipientId) => {
+        if (socket) socket.emit("stopTyping", { conversationId, recipientId });
+    };
+
+    return { connect, disconnect, socket, sendTyping, sendStopTyping };
 };
